@@ -1,0 +1,196 @@
+### Set Matrix Zeros
+
+class Solution {
+public:
+
+    void setZeroes(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+        int m = matrix[0].size();
+        // vector<int> row(n,0);  row --> matrix[..][0]
+        // vector<int> col(m,0);  col --> matrix[0][..]
+        int col0 = 1;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(matrix[i][j]==0){
+                    matrix[i][0]=0;
+                    if(j!=0){
+                    matrix[0][j]=0;
+                    }
+                    else{
+                        col0=0;
+                    }
+                }
+            }
+        }
+        for(int i=1;i<n;i++){
+            for(int j=1;j<m;j++){
+                if (matrix[i][j] != 0) {
+                // check for col & row:
+                if (matrix[i][0] == 0 || matrix[0][j] == 0) {
+                    matrix[i][j] = 0;
+                }
+            }
+            }
+        }
+        if(matrix[0][0]==0){           
+            for(int j=0;j<m;j++){
+                matrix[0][j]=0;
+            }
+        }
+        if(col0==0){
+             for(int i=0;i<n;i++){
+                matrix[i][0]=0;
+            }
+        }
+    }
+
+};
+
+
+
+
+### pascal triangle
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int>> v(numRows);
+        for(int i=0;i<numRows;i++){
+            for(int j=0;j<=i;j++){
+                if(j==0||j==i){
+                    v[i].push_back(1);
+                }
+                else{
+                    v[i].push_back(v[i-1][j-1]+v[i-1][j]);
+                }
+            }
+        }
+        return v;
+
+       
+
+
+        // vector<vector<int>> v(numRows);
+        // vector<int> v2 = {1};
+        // v.push_back(v2);
+        // vector<int> v3 = {1,1};
+        // v.push_back(v3);
+        // for(int i=2;i<numRows;i++){
+        //     vector<int> v1(i+1);
+        //     for(int k=0;k<i+1;k++){
+        //         if(k==0 || k==i){
+        //             v1[k]=1;
+        //         }
+        //         else{
+        //             for(int j=0;j+1<v[i-1].size();j++){
+        //                 int val = v[i-1][j] + v[i-1][j+1];
+        //                 // v1[k]=val;
+        //                 v1.push_back(val);
+        //                 // k++;
+        //             }
+        //         }
+        //     }
+        //     v.push_back(v1);
+        // }
+        // return v;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // vector<vector<int>> v(numRows);
+        // v[0].push_back(1);
+        // // v[1][0]=1;
+        // // v[1][1]=1;
+        // for(int k=1;k<numRows;k++){
+        //     int row = k+1;
+        //     v[k][0]=(1);
+        //     for(int i=0; i+1< v[k-1].size();i++){
+        //         int value = v[k-1][i]+v[k-1][i+1];
+        //         v[k].push_back(value);
+        //     }
+        //     v[k].push_back(1);
+        // }
+        // for(int i=0;i<numRows;i++){
+        //     for(int j=0;j<v[i].size();j++){
+        //         cout<<v[i][j];
+        //     }
+        // }
+        // return v;
+    }
+};
+
+
+
+### Sort Colors
+
+
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        int n=nums.size();
+        int low = 0;
+        int mid=0;
+        int high=n-1;
+        while(mid<=high){
+            if(nums[mid]==0){
+                swap(nums[mid++],nums[low++]);
+            }
+            else if(nums[mid]==1)mid++;
+            else{
+                swap(nums[mid],nums[high--]);
+            }
+        }
+    }
+};
+
+
+### Best Time to but and sell Stock
+
+
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int maxProfit=0;
+        int mini = prices[0];
+        for(int i=1;i<prices.size();i++){
+            int cost = prices[i]-mini;
+            maxProfit = max(maxProfit,cost);
+            mini = min(mini,prices[i]);
+        }
+        return maxProfit;
+    }
+};
