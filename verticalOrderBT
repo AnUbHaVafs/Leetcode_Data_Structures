@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<vector<int>> findVertical(TreeNode* root){
+        queue<pair<TreeNode*, pair<int,int>>> todo;   // queue node : [node,[vo,lvl]]
+        map<int, map<int,multiset<int>>> nodes; //special ds which stores like : 
+        // [vertical_order] --> [[level]--->nodes] - in increasing order everything
+        todo.push({root,{0,0}});
+        while(!todo.empty()){
+            auto p =todo.front();
+            todo.pop();
+            TreeNode* temp = p.first;
+            int x = p.second.first; //vo
+            int y = p.second.second; //level
+            if(temp->left) todo.push({temp->left, {x-1,y+1}}); // level toh increase hona hi hona hai
+            if(temp->right) todo.push({temp->right, {x+1,y+1}}); // level toh increase hona hi hona hai
+            nodes[x][y].insert(temp->val);    // vo -> lvl -> nodes(can be same as well)
+        }
+        vector<vector<int>> ans;
+        for(auto p : nodes){    // p->vos
+            vector<int> col;
+            for(auto q : p.second){   // q --> all nodes
+                col.insert(col.end(), q.second.begin(),q.second.end());  // increasing order pushing
+            }
+            ans.push_back(col);
+        }
+        return ans;
+    }
+
+    vector<vector<int>> verticalTraversal(TreeNode* root) {
+        return findVertical(root);
+    }
+};
