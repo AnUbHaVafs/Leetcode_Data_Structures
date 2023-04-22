@@ -1,0 +1,16 @@
+class Solution {
+public:
+    TreeNode* sortedArrayToBST(vector<int>& nums) {  // sorted array means binary search
+        if(nums.size()==NULL)return NULL;   // no array, no BST
+        TreeNode* root = constructTreeUsingArray(nums,0,nums.size()-1);  
+        return root;
+    }
+    TreeNode* constructTreeUsingArray(vector<int>nums, int left, int right){
+        if(left > right)return NULL; // base condition of binary search
+        int midpoint = left + (right-left) / 2;     // avoiding overflow   
+        TreeNode* node = new TreeNode(nums[midpoint]); // left of mid is my left subtree and same with right.
+        node->left = constructTreeUsingArray(nums,left,midpoint-1); // note params as passed in binarySearch
+        node->right = constructTreeUsingArray(nums,midpoint+1,right); 
+        return node; 
+    }
+};
