@@ -1,0 +1,67 @@
+class Solution {
+public:
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        if(root==NULL)return NULL;  // if BST doesn't exists how we can delete a node in it ? so return null
+        if(root->val==key){ // if root is the node to be deleted , easier edge case
+            return helper(root); 
+        }
+        TreeNode* dummy = root;  // because we are modifying our root pointer 
+        while(root!=NULL){
+            if(root->val > key){  // means key will be found in left subtree
+                if(root->left!=NULL && root->left->val == key){  // we found the node to be deleted
+                    root->left = helper(root->left);  // root->left will be pointing to new BST post deletion
+                    break;
+                }
+                else{
+                    root = root->left;  // else searching that node
+                }
+            }
+            else{
+                if(root->right!=NULL && root->right->val == key){ // root->right > key, seacrh in right 
+                    root->right = helper(root->right); 
+                    break;
+                }
+                else{
+                    root = root->right;
+                }
+            }    
+        }
+        return dummy;
+    }
+    
+    // we are passsing the node to be deleted and returning the new BST formed,post merging its L & R subtree
+    TreeNode* helper(TreeNode* root){
+        if(root->left == NULL)return root->right;
+        else if(root->right == NULL)return root->left;
+        // from total 2 possible solutions we are choosing the one in which , we are reaching to the 
+        // lastright node of left subtree and merging the right suntree of root to its right 
+           TreeNode* rightChild = root->right;
+           TreeNode* lastright = LastRight(root->left);
+           lastright->right = rightChild;
+        return root->left;   // don;t return root, because root is the node we have deleted    
+    }
+    
+    // to find the lastright node or max node in the left subtree of the deleted node
+    TreeNode* LastRight(TreeNode* root){
+        if(root->right==NULL)return root;
+        return LastRight(root->right);
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
