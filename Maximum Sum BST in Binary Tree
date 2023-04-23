@@ -1,0 +1,36 @@
+class NodeValue{
+    public :
+    int maxSum, maxNode, minNode;
+    NodeValue(int maxSum, int maxNode, int minNode){
+        this->maxSum = maxSum;
+        this->maxNode = maxNode;
+        this->minNode = minNode;
+    }
+};
+
+
+
+class Solution {
+private :
+   NodeValue maxSumBSTFromBT(TreeNode* root){
+    if(!root){
+        return NodeValue(0, INT_MIN, INT_MAX);
+    }
+    NodeValue left = maxSumBSTFromBT(root->left);
+    NodeValue right = maxSumBSTFromBT(root->right);
+
+    if(left.maxNode < root->val && root->val < right.minNode ){
+         sum = max(sum, root->val + left.maxSum + right.maxSum);  // this is really IMP step!
+        return NodeValue(left.maxSum+right.maxSum+root->val, 
+                         max(root->val,right.maxNode), 
+                         min(root->val,left.minNode));
+    }
+    return NodeValue(max(left.maxSum,right.maxSum), INT_MAX, INT_MIN);
+  }    
+public:
+    int sum=0;
+    int maxSumBST(TreeNode* root) {
+        maxSumBSTFromBT(root);   
+        return (sum>0 ? sum : 0);
+    }
+};
