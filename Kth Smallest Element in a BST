@@ -1,0 +1,11 @@
+class Solution {
+public:
+    int kthSmallest(TreeNode* root, int &k) {  // using inorder traversal- T.C. =  O(N), S.C. = O(1)
+        if(root==NULL)return -1;  // reached leaf node
+        int left = kthSmallest(root->left, k);  // calling for leftsubtree for samllest [inorder traversal] 
+        if(left!=-1)return left;  // if ans didn't found in left subtree
+        k--;  // maybe current root can be the answer
+        if(k==0)return root->val;   // if current root value is the required kth smallest, return it.
+        return kthSmallest(root->right, k); // if kth samllest is not left and root, then may be in right.
+    }
+};
