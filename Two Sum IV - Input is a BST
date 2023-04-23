@@ -1,0 +1,54 @@
+class BSTIterator{
+    private : 
+       stack<TreeNode*> sequentialNodes;
+       bool reverse = false; 
+       // if reverse is false : next()--> will give us the next(next inorder element) element 
+       // if reverse is true : before()--> will give us the before(just 2nd largest) element 
+    public :
+       BSTIterator(TreeNode* root, bool isReverse){
+           reverse = isReverse;
+           pushAll(root);           
+       }
+       int next(){
+           TreeNode* nextSmallest = sequentialNodes.top();
+           sequentialNodes.pop();
+           // to maintain the inorder sequence, push all rights as well
+           if(!reverse)
+           pushAll(nextSmallest->right);
+           else pushAll(nextSmallest->left);
+           return nextSmallest->val;
+       }
+       int hasnext(){
+           return (!sequentialNodes.empty());
+       }
+    private : 
+        void pushAll(TreeNode* root){
+            while(root!=NULL){
+                sequentialNodes.push(root);
+               if(reverse==true){
+                   root=root->right;
+               }
+               else{
+                    root=root->left;
+               }
+            }
+        }      
+};
+
+class Solution {
+public:
+    bool findTarget(TreeNode* root, int k) {
+        if(!root)return false;
+        BSTIterator l(root, false); //left pointer as we have in 2-sum array approach
+        BSTIterator r(root, true); //right pointer as we have in 2-sum array approach
+
+        int i = l.next();
+        int j = r.next();
+        while(i<j){
+            if(i+j==k)return true;
+            else if(i+j < k)i = l.next();
+            else j = r.next();
+        }
+        return false;
+    }
+};
