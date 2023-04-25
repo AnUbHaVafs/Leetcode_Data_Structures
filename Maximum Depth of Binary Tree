@@ -1,0 +1,18 @@
+Intuition
+Use post order traversal i.e. In order to find the height of a tree, we need to know first the height of its left and right subtree.
+Approach
+Go to Depth(last node) and find the max of left subtree height which will be null so 0 and same for right. Therefore, Height(left)==Height(right)=0 at last node. return max(left,right)+1, which is the actual height and do the same for every node while returning to top.
+
+Complexity
+Time complexity:O(N), since we are traversing each node once.
+Space complexity: O(1) + O(N) [auxiliary recursive stack space]
+Code
+class Solution {
+public:
+    int maxDepth(TreeNode* root) {    
+        if(root==NULL)return 0; // leaf node's height is always 0
+        int left  = maxDepth(root->left);  // left height calculating
+        int right = maxDepth(root->right); // right height calculating
+        return max(left,right)+1;    // then calculate the node's height.
+    }
+};
