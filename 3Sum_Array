@@ -1,0 +1,35 @@
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& num) {
+        vector<vector<int>> res;
+        sort(num.begin(),num.end());   
+        int n =num.size();
+        for(int i=0;i<n-2;i++){ // will make sure this ith ele at max pointing to the last third element to make the triplet at i===last third position. Then second last ele will be my second ele of triplet,
+        // and last ele will be my last ele of triplet.
+            if(i==0 || (i>0 && num[i]!=num[i-1])){
+                int low = i+1;
+                int high = n-1;
+                while(low<high){
+                    if(num[low] + num[high] == 0-num[i]){
+                        vector<int> triplet;
+                        triplet.push_back(num[i]);
+                        triplet.push_back(num[low]);
+                        triplet.push_back(num[high]);
+                        res.push_back(triplet);
+                        while(low<high && num[low]==num[low+1])low++;
+                        while(low<high && num[high]==num[high-1])high--;
+                        low++;
+                        high--;
+                    }
+                    else if(num[low]+num[high] < 0-num[i]){
+                        low++;
+                    }
+                    else{
+                        high--;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+};
