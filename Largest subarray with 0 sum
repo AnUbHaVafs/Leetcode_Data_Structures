@@ -1,0 +1,30 @@
+
+class Solution{
+    public:
+    int maxLen(vector<int>&A, int n)
+    {   
+        // Prefix Sum Approach
+        // Your code here
+        int sum = 0;
+        int maxLen = 0;
+        map<int,int> preSumMap;
+        for(int i=0;i<n;i++){
+            sum+=A[i];
+            if(sum==0){
+                maxLen = max(maxLen,i+1);
+            }
+            else{
+                int rem = sum - 0;
+                if(preSumMap.find(rem)!=preSumMap.end()){
+                    int len = i - preSumMap[rem];
+                    maxLen = max(maxLen,len);
+                }
+            }
+            if(preSumMap.find(sum)==preSumMap.end()){
+                // if this sum is not found till any index then we will insert it into map
+                preSumMap[sum]=i;
+            }
+        }
+        return maxLen;
+    }
+};
