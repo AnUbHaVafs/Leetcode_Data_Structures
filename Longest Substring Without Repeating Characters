@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int n = s.size();
+        int left = 0, right = 0;
+        vector<int> mpp(256, -1); // at max we can have 256 characters in any string because latest ASCII uses 8 bits (1 byte) to represent each char. So, 2^8 = 256 maximum characters it can represent
+        int len = 0;
+        while(right < n){
+            if(mpp[s[right]]!=-1){  // if char exists already then place left at its correct index
+                left = max(left,mpp[s[right]]+1);  // moving left
+            }
+            mpp[s[right]] = right;  // updating latest pon of each char
+            len = max(len, right-left+1); // longest length substring
+            right++;
+        }
+        return len;
+    }
+};
