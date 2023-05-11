@@ -1,0 +1,20 @@
+void insertAtStack(stack<int>&s, int ele){
+    if(s.size()==0 || s.top()<=ele){
+        s.push(ele);
+        return;
+    }
+    int temp = s.top();
+    s.pop();
+    insertAtStack(s,ele);
+    s.push(temp);
+    return;
+}
+
+void sortAStack(stack<int> &s){
+    if(s.size()==1)return;
+    int temp = s.top();
+    s.pop();
+    sortAStack(s);
+    insertAtStack(s,temp);
+    return;
+}
