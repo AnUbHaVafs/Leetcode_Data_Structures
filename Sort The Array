@@ -1,0 +1,21 @@
+  vector<int> insertAT(vector<int> &V, int val) {
+      int len = V.size(); 
+      if((len == 0) || (V[len-1] <= val)) {
+        V.push_back(val); return V;
+      }
+      int last = V[len-1]; 
+      V.pop_back(); 
+      insertAT(V, val);
+      V.push_back(last);
+      return V;
+    }
+    public:
+    vector<int> sortArr(vector<int>arr, int n){
+    //complete the function here
+      if(n==1)return arr;
+      int last = arr[arr.size() - 1];
+      arr.pop_back();
+      vector<int> temp = sortArr(arr,arr.size());
+      vector<int> sorted = insertAT(temp, last);
+      return sorted;
+    }
