@@ -1,0 +1,18 @@
+private:
+    long long solve(int s, int d, int h, int N, long long& count){
+        count++;
+        if(N==1){
+            cout<<"move disk "<< N <<" from rod "<<s<<" to rod "<<d<<endl;
+            return count;
+        }
+        solve(s,h,d,N-1,count);
+        cout<<"move disk "<<N<<" from rod "<<s<<" to rod "<<d<<endl;
+        solve(h,d,s,N-1,count);
+        return count;
+    }
+    
+    public:
+    long long toh(int N, int from, int to, int aux) {
+        long long count=0;
+        return solve(from,to,aux,N,count);
+    }
