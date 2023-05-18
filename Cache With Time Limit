@@ -5,7 +5,7 @@ var TimeLimitedCache = function() {
 /** 
  * @param {number} key
  * @param {number} value
- * @param {number} time until expiration in ms
+ * @param {number} time until expiration
  * @return {boolean} if un-expired key already existed
  */
 TimeLimitedCache.prototype.set = function(key, value, duration) {
