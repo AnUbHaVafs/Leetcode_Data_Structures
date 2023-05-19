@@ -1,0 +1,33 @@
+class Solution {
+private: 
+    void solve(string ip, string op, vector<string> &res){
+        if(ip.size()==0){
+            res.push_back(op);
+            return;
+        }
+        string op1 = op;
+        string op2 = op;
+        if(ip[0]-'0' >=0 && ip[0]-'0' <=9){//number --> then directly push
+           op1.push_back(ip[0]);
+           op2.push_back(ip[0]);
+            ip.erase(ip.begin()+0);
+            solve(ip,op1,res);
+        }
+        else{ // vaid char ----> then recursion calls
+           op1.push_back(tolower(ip[0]));
+           op2.push_back(toupper(ip[0]));
+           ip.erase(ip.begin()+0);
+           solve(ip,op1,res);
+           solve(ip,op2,res);
+        }        
+        return;
+    }   
+public:
+    vector<string> letterCasePermutation(string s) {
+        vector<string> res;
+        string op = "";
+        string ip = s;
+        solve(ip,op,res);
+        return res;
+    }
+};
