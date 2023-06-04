@@ -1,0 +1,30 @@
+class Solution {    
+private:
+    char solve(int n, int k){
+        char res;
+        if(n==1 && k==1){
+            return '0';
+        }
+        long long mid = ((pow(2,n)-1)/2)+1;
+        // cout<<mid<<endl;
+        if(k<mid){
+            res =  solve(n-1,k);
+            // cout<<n-1<<","<<k<<"-->"<<res<<endl;
+            return res;
+        }
+        else if(k==mid){
+            res = '1';
+            //  cout<<n-1<<","<<k<<"-->"<<res<<endl;
+            return res;
+        }
+        k = k%mid;
+        k = mid-k;
+        // cout<<n-1<<","<<k<<"-->"<<!res<<endl;
+        res = solve(n-1,k);
+        return (res=='1')?'0':'1';
+    }    
+public:
+    char findKthBit(int n, int k) {
+        return solve(n,k);
+    }
+};
