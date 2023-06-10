@@ -1,0 +1,20 @@
+class Solution {
+public:
+    bool isFascinating(int n) {
+        int n1 = n;
+        int n2 = 2*n;
+        int n3 = 3*n;
+        string ans1 = to_string(n1);
+        string ans2 = to_string(n2);
+        string ans3 = to_string(n3);
+        string finalans = ans1 + ans2 + ans3;
+        cout<<finalans<<endl;
+        map<char,int> freq;
+        for(int i=0;i<finalans.size();i++){
+            freq[finalans[i]]++;
+            if(freq['0']>0)return false;
+            else if(freq[finalans[i]]>1)return false;
+        }
+        return true;
+    }
+};
