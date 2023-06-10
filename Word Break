@@ -1,0 +1,21 @@
+class Solution
+{
+public:
+    int wordBreak(string s, vector<string> &wordDict) {
+        //code here
+         if(find(wordDict.begin(), wordDict.end(), s) != wordDict.end())
+            return true;
+        
+        for(int i=1; i<=s.length(); i++){
+            string prefix = s.substr(0, i);
+            
+            //finding the prefix in the wordDict
+            auto it = find(wordDict.begin(), wordDict.end(), prefix) != wordDict.end();
+            
+            //check for the remaining portion of string
+            if(it && wordBreak(s.substr(i), wordDict))
+                return true;
+        }
+        return false;
+    }
+};
