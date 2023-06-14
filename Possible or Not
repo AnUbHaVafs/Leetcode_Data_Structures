@@ -1,0 +1,83 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+ int find_and(vector<int> arr, int len)
+{
+    // Initialise ans variable is arr[0]
+    int ans = arr[0];
+    // Traverse the array compute AND
+    for (int i = 0; i < len; i++)
+        ans = (ans & arr[i]);
+    return ans;
+}
+ 
+// Recursive function to print all
+// possible subsequences for given array
+void printSubsequences(vector<int> arr, int index,
+                       vector<int> &subarr,int n, int B, int &finalans)
+{
+    // Print the subsequence when reach
+    // the leaf of recursion tree
+    if (index == n)
+    {
+        if(subarr.size()>0){
+        int ans = find_and(subarr,subarr.size());
+    //   cout<<ans<<endl;
+       if(ans==B){
+           finalans = ans;
+        //   cout<<"Found it!"<<endl;
+           return;
+           
+       }
+       
+        }
+      return;
+ 
+         
+    }
+    else
+    {
+       //pick the current index into the subsequence.
+        subarr.push_back(arr[index]);
+       
+ 
+         printSubsequences(arr, index + 1, subarr,n,B,finalans);
+ 
+         
+        subarr.pop_back();
+       
+      //not picking the element into the subsequence.
+        printSubsequences(arr, index + 1, subarr,n,B,finalans);
+    }
+    
+}
+
+int main() {
+	// your code goes here
+	int t;
+	cin>>t;
+	while(t--){
+	    int n,B;
+	    cin>>n>>B;
+	    vector<int> arr(n);
+	    for(int i=0;i<n;i++){
+	        cin>>arr[i];
+	    }
+	    
+	    
+	    
+	    
+	    
+	    
+	    vector<int> vec;
+	    int finalans=INT_MIN;
+	    printSubsequences(arr, 0, vec,n,B,finalans);
+	   // cout<<"Ans"<<endl;
+	   // cout<<finalans<<endl;
+	    if(finalans==B)cout<<"Yes"<<endl;
+	    else cout<<"no"<<endl;
+	    
+	    
+	}
+	return 0;
+}
