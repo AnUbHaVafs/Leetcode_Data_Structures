@@ -1,0 +1,49 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+	// your code goes here
+	int t;
+	cin>>t;
+	while(t--){
+	    int n;
+	    cin>>n;
+	    int A[n];
+	    int B[n];
+	    for(int i=0;i<n;i++){
+	        cin>>A[i];
+	    }
+	    for(int i=0;i<n;i++){
+	        cin>>B[i];
+	    }
+	    int omCount = 0;
+	    int addyCount = 0;
+	    int om = 0;
+	    int addy = 0;
+	    for(int i=0;i<n;i++){
+	        if(A[i]==0){
+	            omCount = max(omCount,om);
+	            om=0;
+	        }
+	        else {
+	            om++;
+	        }
+	    }
+	    for(int i=0;i<n;i++){
+	        if(B[i]==0){
+	            addyCount = max(addyCount,addy);
+	            addy=0;
+	        }
+	        else {
+	        addy++;
+	        }
+	    }
+	    omCount = max(omCount,om);
+	    addyCount = max(addyCount,addy);
+	    if(omCount>addyCount)cout<<"Om"<<endl;
+	    else if(addyCount>omCount)cout<<"Addy"<<endl;
+	    else cout<<"Draw"<<endl;
+	}
+	return 0;
+}
