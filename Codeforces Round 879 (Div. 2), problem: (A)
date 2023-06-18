@@ -1,0 +1,54 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int solve(vector<int> v, int n){
+    int pOnes = 0;
+    int nOnes = 0;
+    int ans = 0;
+    for(int i=0;i<n;i++){
+        if(v[i]==1)pOnes++;
+        else nOnes++;
+    }
+    int sum = 1*pOnes + (-1)*nOnes;
+    int product = 0;
+    if(nOnes%2!=0)product=-1;
+    else product=1;
+    // cout<<sum<<"-->"<<product<<endl;
+    if(sum<0){
+        sum = abs(sum);
+        if(sum%2 == 0){
+            ans=sum/2;
+        }
+        else{
+            ans = sum/2 + 1;
+        }
+        
+        // ans = ans+1;
+        nOnes = nOnes - ans;
+        if(nOnes%2 != 0){
+            ans = ans + 1;
+            return ans;
+        }
+        else return ans;
+    }
+    if(product==-1){
+        return 1;
+    }
+    
+    return ans;
+}
+
+int main(){
+     int t;
+     cin>>t;
+     while(t--){
+         int n;
+         cin>>n;
+         vector<int> v(n,0);
+         for(int i=0;i<n;i++){
+             cin>>v[i];
+         }
+         cout<<solve(v,n)<<endl;
+     }
+    return 0;
+}
