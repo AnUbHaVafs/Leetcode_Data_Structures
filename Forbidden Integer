@@ -1,0 +1,54 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+bool solve(int n, int k, int x, vector<int> &ans){
+    for(int i=k; i>=1; i--){
+        if(i==x)continue;
+        int j=1,product=1;
+        bool camefrompop = false;
+        while(product<=n){
+            if(product==n){
+                camefrompop = true;
+                ans.push_back(i);
+                break;
+            }
+            product = i * j;
+            j++;
+            ans.push_back(i);            
+        }
+        if(!camefrompop){
+        product -= k;
+        }
+        ans.pop_back();
+        n -= product;
+        if(n==0)return true;
+    }
+   
+    return false;
+}
+
+void print(vector<int> &ans){
+    for(int i=0;i<ans.size();i++){
+        cout<<ans[i]<<" ";
+    }
+    cout<<endl;
+}
+
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        int n,k,x;
+        cin>>n>>k>>x;
+        vector<int> ans;
+        if(solve(n,k,x,ans)){
+        cout<<"Yes"<<endl;
+        cout<<ans.size()<<endl;    
+        print(ans);
+        }
+        else{
+            cout<<"NO"<<endl;
+        }
+    }
+    return 0;
+}
