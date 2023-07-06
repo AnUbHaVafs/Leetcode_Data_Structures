@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& num) {
+       int n = num.size();
+       vector<vector<int>>ans;
+       sort(num.begin(),num.end()); //sorted the array and now kind of binary search b/w j & k.
+       for(int i=0;i<n;i++){        // for every i.
+           if(i>0 && num[i]==num[i-1])continue; //don't go down and go back and increase i++;
+           int j=i+1;
+           int k=n-1;
+           while(j<k){
+               int sum = num[i]+num[j]+num[k]; // lol binary search!
+               if(sum<0){
+                   j++;
+               }
+               else if(sum>0){
+                   k--;
+               }
+               else{
+                   vector<int> temp = {num[i],num[j],num[k]}; //already sorted
+                   ans.push_back(temp);
+                   j++;
+                   k--;
+                   while(j<k && num[j]==num[j-1])j++; // so that now both j and k are unique 
+                   while(j<k && num[k]==num[k+1])k--; // again after one triplet is found for i.
+               }
+           }
+       }
+       return ans;
+    }
+};
