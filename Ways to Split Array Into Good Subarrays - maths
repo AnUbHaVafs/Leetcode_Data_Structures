@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int numberOfGoodSubarraySplits(vector<int>& nums) {
+        int start = 0;
+        
+        while(start!=nums.size() && nums[start]!=1){
+            start++;  // reached first 1
+        }
+        if(start==nums.size()){
+            return 0;  // all are zeroes in array return no split possible
+        }
+        
+        long long int ans = 1;  // if [0,0,1,0]-- ans==1 return;
+        int walker = start;   // index 
+        int mod = 1000000007; 
+        
+        while(walker<nums.size()){
+            int count = 1; // noOfZeroes + 1 // inbetween 2 1's
+            walker++;
+            while(walker!=nums.size() && nums[walker]!=1){
+                count++;
+                walker++;
+            }
+            
+            if(walker!=nums.size()){
+                ans = ((ans%mod)*(count%mod))%mod; // 1*5 /// why %mod ?  // bec -> 10^9 * 10^3 --> overflow , since ans is mult.
+            }
+        }
+        
+        return ans;
+    }
+};
