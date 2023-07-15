@@ -1,0 +1,38 @@
+class Solution {
+
+private:
+const int MOD = 1e9 + 7;
+int helper(int idx, int count, vector<int>& nums, vector<vector<int>>& dp){
+
+    if(idx < 0){
+        if(count == 1)
+            return 1;
+        return 0;
+    }
+    if(nums[idx] == 1) count++;
+    if(count > 1) //as we cannot keep more than one 1
+        return 0;  
+    
+    if(dp[idx][count] != -1) return dp[idx][count];
+    
+    int pick = helper(idx-1, count, nums, dp);
+    //count remains the same (pick = no split, add into same subarry)
+    
+    int notpick = 0;
+    if(count == 1){
+        notpick = helper(idx-1, 0, nums, dp);
+        //we didn't pick into same array, we break and create new subarry
+        //so count is reset with 0
+    }
+    
+    return dp[idx][count] = (pick + notpick)%MOD;
+}
+
+public:
+    int numberOfGoodSubarraySplits(vector<int>& nums) {
+        int N = nums.size();
+        vector<vector<int>> dp(N, vector<int>(2,-1));
+        //count has just 2 states => 0 and 1
+        return helper(N-1, 0, nums, dp);
+    }
+};
