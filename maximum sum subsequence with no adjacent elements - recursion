@@ -1,0 +1,19 @@
+class Solution
+{
+    int func(int ind, int arr[]){
+        if(ind==0)return arr[ind];
+        if(ind<0)return 0;
+        int take = arr[ind] + func(ind-2,arr);
+        int not_take = 0 + func(ind-1,arr);
+        
+        return max(take,not_take);
+    }
+    
+    public:
+    //Function to find the maximum money the thief can get.
+    int FindMaxSum(int arr[], int n)
+    {
+        // Your code here
+        return func(n-1,arr);
+    }
+};
