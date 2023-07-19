@@ -1,0 +1,41 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+	// your code goes here
+	int t;
+	cin>>t;
+	while(t--){
+	    int n;
+	    cin>>n;
+	    vector<int> v;
+	    for(int i=0;i<n;i++){
+	        int x;
+	        cin>>x;
+	        v.push_back(x);
+	    }
+	   
+	    vector<long long> ans;
+	    long long sum = 0;
+	    priority_queue<int> pq;
+	    for(int i=0;i<n;i++){
+	        pq.push(v[i]);
+	    }
+	   while (pq.empty() == false){
+	        int top = pq.top();
+	        sum += top;
+	       // cout<<sum<<endl;
+	        ans.push_back(sum);
+	        pq.pop();
+	       // cout<<su
+	    }
+	   // reverse(v.begin(),v.end());
+	    for(int i=n-1;i>=0;i--){
+	        cout<<ans[i]<<" ";
+	    }
+	    cout<<endl;
+	    
+	}
+	return 0;
+}
