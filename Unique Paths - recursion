@@ -1,0 +1,13 @@
+class Solution {
+    int countPaths(int i, int j){
+        if(i==0 && j==0)return 1;
+        if(i<0 || j<0)return 0;
+        int left = countPaths(i,j-1);
+        int up= countPaths(i-1,j);
+        return left+up;
+    }
+public:
+    int uniquePaths(int m, int n) {
+        return countPaths(m-1,n-1);
+    }
+};
