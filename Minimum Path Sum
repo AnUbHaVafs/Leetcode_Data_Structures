@@ -1,0 +1,15 @@
+class Solution {
+    int func(int i, int j, vector<vector<int>> &grid){
+        if(i==0 && j==0)return grid[0][0];
+        if(i<0 || j<0)return 1e9;
+        int up = grid[i][j]+ func(i-1,j,grid);
+        int left = grid[i][j] + func(i,j-1,grid);
+        return min(up, left);
+    }
+public:
+    int minPathSum(vector<vector<int>>& grid) {
+        int m = grid.size();
+        int n = grid[0].size();
+        return func(m-1,n-1, grid);
+    }
+};
