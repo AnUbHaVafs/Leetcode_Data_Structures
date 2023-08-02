@@ -1,0 +1,20 @@
+class Solution {
+    bool f(int i, int target, vector<int> &nums){
+        if(target==0)return true;
+        if(i==0)return (nums[i]==target);
+        bool notTake = f(i-1,target,nums);
+        bool take = false;
+        if(target>=nums[i])
+           take = f(i-1,target-nums[i],nums);
+        return take | notTake;   
+    }
+public:
+    bool canPartition(vector<int>& nums) {
+        int n = nums.size();
+        int sum=0;
+        for(int i=0;i<n;i++)sum+=nums[i];
+        if(sum%2)return false;
+        int target = sum/2;
+        return f(n-1,target,nums);
+    }
+};
