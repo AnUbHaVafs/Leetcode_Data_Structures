@@ -1,0 +1,20 @@
+int mod=1e9 + 7;
+
+int findWays(vector<int>& arr, int k)
+{
+	int n = arr.size();	
+	vector<int> prev(k+1,0);
+	vector<int> curr(k+1);
+	prev[0]=curr[0]=1;
+	if(k>=arr[0])prev[arr[0]]=1;
+	for(int i=1;i<n;i++){
+		for(int tar=0;tar<=k;tar++){
+			int notPick = prev[tar];
+			int pick=0;
+			if(arr[i]<=tar)pick = prev[tar-arr[i]];
+			curr[tar]= (pick+notPick)%mod;
+		}
+		prev=curr;
+	}
+	return prev[k];	
+}
