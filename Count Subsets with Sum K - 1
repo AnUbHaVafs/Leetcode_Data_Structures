@@ -1,0 +1,15 @@
+int f(int i, int sum, vector<int> &nums){
+	if(sum==0)return 1;
+	if(i==0)return nums[0]==sum;
+	int notPick = f(i-1,sum,nums);
+	int pick=0;
+	if(nums[i]<=sum)pick = f(i-1,sum-nums[i],nums);
+	return pick+notPick;
+}
+
+int findWays(vector<int>& arr, int k)
+{
+	int n = arr.size();
+	return f(n-1,k,arr);
+	// Write your code here.
+}
