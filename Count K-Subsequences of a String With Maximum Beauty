@@ -1,0 +1,61 @@
+class Solution {
+public:
+    int countKSubsequencesWithMaxBeauty(string s, int k) {
+        map<char, int> mp;
+        for (auto &e : s)
+            mp[e]++;
+        
+        vector<pair<int, char>> v;
+        for (auto &e : mp)
+            v.push_back({ e.second, e.first });
+        sort(begin(v), end(v), [](auto &e1, auto &e2) {
+            return e1 > e2;
+        });
+        
+        if (v.size() < k) {
+            return 0;
+        }
+        
+        long long prod = 1;
+        long long mod = 1e9 + 7;
+        long long idx = 0;
+        for (int i = 0; v[i].first != v[k - 1].first; ++i) {
+            prod = (prod * v[i].first) % mod;
+            idx++;
+        }
+        long long cnt = 0;
+        for (int i = 0; i < (int)v.size(); ++i)
+            if (v[i].first == v[k - 1].first)
+                cnt++;
+        
+        long long fac[200'001];
+        fac[0] = 1;
+        for (int i = 1; i <= 200'000; ++i)
+            fac[i] = fac[i - 1] * i % mod;
+        
+        auto power = [&] (long long a, long long b) {
+            long long res = 1;
+            while (b > 0) {
+                if (b % 2 == 1)
+                    res = res * a % mod;
+                a = a * a % mod;
+                b /= 2;
+            }
+            return res;
+        };
+        
+        auto ncr = [&] (long long n, long long r) {
+            return fac[n] * power(fac[r] * fac[n - r] % mod, mod - 2) % mod;
+        };
+        
+        // cout << cnt << '\n';
+        
+        long long req = k - idx;
+        
+        long long ans = prod * ncr(cnt, req) % mod;
+        for (int i = 0; i < req; ++i)
+            ans = ans * (v[k - 1].first) % mod;
+        
+        return ans;
+    }
+};
