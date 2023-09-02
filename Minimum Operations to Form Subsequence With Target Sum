@@ -1,0 +1,57 @@
+class Solution {
+public:
+    int minOperations(vector<int>& nums, int target)
+    {
+        vector<int> count(32,0);
+        
+        for(auto n : nums)
+        {
+            for(int i=0;i<32;i++) if(n & (1<<i)) count[i]++;
+        }
+        
+        
+        int ans = 0;
+        
+        for(int i=0;i<32;i++)
+        {
+            if(target&(1<<i))
+            {
+                if(count[i])
+                {
+                    count[i]--;
+                }
+                else
+                {
+                    bool check = true;
+                    for(int j=i+1;j<32;j++)
+                    {
+                        if(count[j])
+                        {
+                        // find nearest left bit to bring it to current positon 
+                        // jth bit will be divided and (j-1)th bit will increase by 2
+                        // decrease its count to 1 and increase next count by 2
+                        // in this way all the middle bits will be 1
+                            for(int k = i;k<j;k++) count[k]++;
+                            count[j]--;
+                            ans += (j-i);
+                            check = false;
+                            break;
+                        }
+                    }
+                    
+                    if(check) return -1;
+                }
+            }
+            
+            if(i<31)
+            {
+                // aggregate current bits to create (i+1)th bit 
+                count[i+1] += count[i]/2;
+            }
+            
+            
+        }
+        
+        return ans;
+    }
+}; 
