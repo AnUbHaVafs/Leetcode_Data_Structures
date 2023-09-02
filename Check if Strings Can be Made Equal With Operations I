@@ -1,0 +1,26 @@
+class Solution {
+public:
+    bool canBeEqual(string s1, string s2) {
+        int i=0;
+        while(i!=2){
+            if(s1[i]==s2[i]){
+                i++;
+                // continue;
+            }
+            else if(s1[i+2]==s2[i]){
+                char temp = s1[i+2];
+                s1[i+2]=s1[i];
+                s1[i]=temp;
+                i++;
+            }
+            else{
+                return false;
+            }
+        }
+        while(i!=4){
+            if(s1[i]!=s2[i])return false;
+            else i++;
+        }
+        return true;
+    }
+};
