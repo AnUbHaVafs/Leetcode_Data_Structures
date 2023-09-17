@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int mostWordsFound(vector<string>& sentences) {
+        int c=0;
+        for(auto sentence:sentences)
+        {
+        int x=count(sentence.begin(),sentence.end(),' ')+1;
+        c=max(c,x);
+        }
+        return c;
+    }
+   
+};
