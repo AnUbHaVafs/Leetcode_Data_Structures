@@ -1,0 +1,54 @@
+class Solution {
+public:
+    long long maximumSumOfHeights(vector<int>& maxHeights) {
+        long long ans=0;
+        vector<long long> res,res2;
+        vector<pair<long long,long long> >v;
+        {
+        long long sum=0;
+        long long cnt=0;
+        for(auto it:maxHeights){
+            while(v.size()&&v.back().first>it){
+                auto p=v.back();
+                v.pop_back();
+                if(v.empty())sum=0;
+                else sum-=(p.second-v.back().second)*p.first;
+            }
+            if(v.size())
+            sum+=(cnt-v.back().second)*1ll*it;
+            else
+            sum+=(cnt+1)*1ll*it;
+            v.push_back(make_pair(it,cnt));
+            cnt++;
+            res.push_back(sum);
+        }
+    }
+        v.clear();
+        reverse(maxHeights.begin(),maxHeights.end());
+    swap(res,res2);
+                {
+        long long sum=0;
+        long long cnt=0;
+        for(auto it:maxHeights){
+             while(v.size()&&v.back().first>it){
+                auto p=v.back();
+                v.pop_back();
+                if(v.empty())sum=0;
+                else sum-=(p.second-v.back().second)*p.first;
+            }
+            if(v.size())
+            sum+=(cnt-v.back().second)*1ll*it;
+            else
+            sum+=(cnt+1)*1ll*it;
+            v.push_back(make_pair(it,cnt));
+            cnt++;
+            res.push_back(sum);
+        }
+    }
+reverse(res2.begin(),res2.end());
+        for(int i = 0;i<res.size();i++){
+            ans=max(ans,res[i]+res2[i]-maxHeights[i]);
+        }
+        return ans;
+    }
+};
