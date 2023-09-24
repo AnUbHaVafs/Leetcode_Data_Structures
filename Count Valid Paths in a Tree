@@ -1,0 +1,50 @@
+class Solution {
+public:
+    int f[100005];
+    int Size[100005];
+    int Find(int x){
+        if(f[x]==x)return x;
+        return f[x]=Find(f[x]);
+    }
+    int nprime[100005];
+    vector<int> v[100005];
+    long long countPaths(int n, vector<vector<int>>& edges) {
+        long long ans=0;//n*1ll*(n-1)/2;
+        memset(nprime,0,sizeof(nprime));
+        nprime[1]=1;
+        for(int i = 2;i<=n;i++){
+            for(int j = i*2;j<=n;j+=i){
+                nprime[j]=1;
+            }
+        }
+        for(int i = 1;i<=n;i++){
+            f[i]=i;
+            Size[i]=1;
+            v[i].clear();
+        }
+        for(auto it:edges){
+            if(nprime[it[0]]&&nprime[it[1]]){
+                int x=Find(it[0]),y=Find(it[1]);
+                f[x]=y;
+                Size[y]+=Size[x];
+            }
+            if(nprime[it[0]]&&!nprime[it[1]])v[it[1]].push_back(it[0]);
+            if(nprime[it[1]]&&!nprime[it[0]])v[it[0]].push_back(it[1]);
+        }
+        for(int i = 1;i<=n;i++){
+            if(!nprime[i]){
+                long long sum=1;
+                for(auto it:v[i]){
+                    sum+=Size[Find(it)];
+                  //  printf("%d %d\n",i,Size[Find(it)]);
+                }
+                ans+=sum*(sum-1)/2;
+                for(auto it:v[i]){
+                    
+                    ans-=Size[Find(it)]*1ll*(Size[Find(it)]-1)/2;
+                }
+            }
+        }
+        return ans;
+    }
+};
