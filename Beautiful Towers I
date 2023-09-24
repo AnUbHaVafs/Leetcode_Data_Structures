@@ -1,0 +1,21 @@
+class Solution {
+public:
+    long long maximumSumOfHeights(vector<int>& maxHeights) {
+        long long ans=0;
+        for(int i = 0;i<maxHeights.size();i++){
+            long long sum=maxHeights[i];
+            int a=maxHeights[i];
+            for(int j = i-1;j>=0;j--){
+                a=min(a,maxHeights[j]);
+                sum+=a;
+            }
+            a=maxHeights[i];
+            for(int j = i+1;j<maxHeights.size();j++){
+                a=min(a,maxHeights[j]);
+                sum+=a;
+            }
+            ans=max(ans,sum);
+        }
+        return ans;
+    }
+};
