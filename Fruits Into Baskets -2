@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int totalFruit(vector<int>& fruits) {
+        int n =fruits.size();
+        int i=0,j=0;
+        unordered_set<int> s;
+        unordered_map<int,int>freq;
+        int ans=0;
+        while(j!=n){
+            int currFruit = fruits[j];
+            s.insert(currFruit);
+            freq[currFruit]++;
+            if(s.size()>2){
+                int cnt=0;
+                unordered_set<int>::iterator itr;
+                for(itr=s.begin();itr!=s.end();itr++){
+                    if(*itr==currFruit)continue;
+                    else cnt+=freq[*itr];
+                }
+                ans=max(ans,cnt);
+                while(s.size()!=2){                    
+                    freq[fruits[i]]--;
+                    if(freq[fruits[i]]==0)s.erase(fruits[i]);
+                    i++;
+                }
+            }
+            j++;
+        }
+        int cnt=0;
+        unordered_set<int>::iterator itr;
+        for(itr=s.begin();itr!=s.end();itr++){
+            cnt+=freq[*itr];
+        }
+        ans=max(ans,cnt);
+        return ans;
+    }
+};
