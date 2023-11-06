@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int totalFruit(vector<int>& tree) {
+        int n =tree.size();
+        int type1 = tree[0], type2 = -1;
+        int combos = 1;//assume type1 is prev type
+        int curLen = 1, maxi = 1;
+        for(int i=1;i<n;i++)
+        {
+            if(tree[i] != type1 && tree[i] != type2 && type2!=-1)
+            {
+                maxi = max(curLen, maxi);
+                curLen = combos + 1;
+                type2 = type1; 
+                type1 = tree[i];
+                combos = 1;
+                continue;
+            }
+            if(tree[i] == type1)
+                combos++;
+            else //swap type1 and type2 
+            {
+                type2 = type1;
+                type1 = tree[i];
+                combos = 1;
+            }
+            curLen++;
+        }
+        return max(maxi,curLen);
+    }
+};
