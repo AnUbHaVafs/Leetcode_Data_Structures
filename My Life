@@ -1,0 +1,10 @@
+Type Conversions: 
+1. 5(int) → 5.5(double) [no compiler warnings, errors, safe implicit type conversion.]
+5.5(double)--> 5(int) [might lose value compiler warnings (but in case of brace initialization, it will generate the error), therefore - Brace initialization is the preferred initialization form. Brace initialization will ensure we don’t try to initialize a variable with an initializer that will lose value when it is implicitly type converted]
+1. The static_cast operator will produce undefined behavior if the value being converted doesn’t fit in range of the new type.
+2. 97 is ASCII code for 'a'
+3. 
+ char ch1{}; // '\0' 
+ char ch2{ 0 }; // '\0', implicit conversion from int 
+ char ch3{ static_cast<char>( 0 ) }; // '\0', explicit conversion from int
+4.
