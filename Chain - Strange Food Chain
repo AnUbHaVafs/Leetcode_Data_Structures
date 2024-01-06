@@ -1,0 +1,86 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define rep(i, n) for (int i = 0; i < (n); ++i)
+#define rep1(i, n) for (int i = 1; i < (n); ++i)
+#define rep1n(i, n) for (int i = 1; i <= (n); ++i)
+#define repr(i, n) for (int i = (n)-1; i >= 0; --i)
+#define pb push_back
+#define eb emplace_back
+#define mp make_pair
+#define all(a) (a).begin(), (a).end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define sz(a) (int)(a.size())
+#define each(x, a) for (auto &x : a)
+
+void make_set(int n,vector<int>&parent){
+    for(int i=0;i<parent.size();i++)parent[i]=i;
+}
+
+int findPar(int u, vector<int>&parent){
+    if(u==parent[u])return u;
+    return findPar(parent[u],parent);
+}
+
+bool findSpecificParent(int u, int v, vector<int> &parent)
+{
+    if(parent[u]==v)return true;
+    if (u == parent[u])
+        return false;
+    return findSpecificParent(parent[u],v, parent);
+}
+
+void Union(int u, int v, vector<int>&parent){
+    parent[u]=v;
+}
+
+
+void doesBelongToSame(int x, int y, int &wrongPieces, vector<int>&parent){
+    if (!(findPar(x, parent) == findPar(y, parent)))
+    {
+        wrongPieces++;
+        return;
+    };
+}
+
+void isYParentOfX(int x, int y, int &wrongPieces, vector<int> &parent)
+{
+    if(x==y){
+        wrongPieces++;
+        return;
+    }
+    int u = findPar(x,parent);
+    int v = findPar(y,parent);
+    if(u!=v){
+        // u can eat v;
+        Union(u,v,parent);
+    }
+    else{
+        if(!findSpecificParent(x,y,parent))wrongPieces++;
+    }
+}
+
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        int n,k;
+        cin>>n>>k;
+        vector<int>v(n);
+        int wrongPieces=0;
+        vector<int>parent(n+1);
+        make_set(n,parent);
+        while(k--){
+            int cond,x,y;
+            cin>>cond>>x>>y;
+            if(x>n || y>n){
+                wrongPieces++;
+                continue;
+            }
+            (cond==1)?doesBelongToSame(x,y,wrongPieces,parent):isYParentOfX(x,y,wrongPieces,parent);         
+        }
+        cout<<wrongPieces<<endl;
+    }
+    return 0;
+}
+
