@@ -1,0 +1,65 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void make_set(vector<int>& parent, vector<int>& rank){
+    for(int i=0;i<parent.size()-1;i++){
+        parent[i+1]=i+1;
+        rank[i+1]=0;
+    }
+}
+
+int findPar(int u, vector<int>& parent){
+    if(u==parent[u])return u;
+    return findPar(parent[u],parent);
+}
+
+void Union(int u, int v, vector<int>&parent, vector<int>&rank){
+    u = findPar(u, parent);
+    v = findPar(v, parent);
+    if(u!=v){
+        if(rank[u]<rank[v]){
+            swap(u,v);
+        }
+        parent[v]=u;
+        if(rank[u]==rank[v]){
+            ++rank[u];
+        }
+    }    
+}
+
+int main(){
+    int n;
+    cin>>n;
+    vector<int> parent(n+1);
+    vector<int> rank(n+1);
+    vector<pair<int,int>>edges;
+    
+    make_set(parent,rank);
+
+    for(int i=0;i<n-1;i++){
+        int u, v;
+        cin>>u>>v;
+        edges.push_back(make_pair(u,v));
+    }
+
+    vector<pair<int,int>> close;
+    vector<pair<int,int>> rebuild;
+    for(int i=0;i<edges.size();i++){
+        int u = edges[i].first;
+        int v = edges[i].second;
+        // to find close roads online (dynamically)
+        if (findPar(parent[u],parent) == findPar(parent[v],parent))close.push_back(edges[i]);
+        Union(u, v, parent, rank);
+    }
+
+    vector<int>closedRoads;
+    for(int i=1;i<n+1;i++){
+        if(parent[i]==i)closedRoads.push_back(i);
+    }
+    cout<<closedRoads.size()-1<<endl;
+    for(int i=1;i<closedRoads.size();i++){
+        cout<<close[i-1].first<<' '<<close[i-1].second<<' '<<closedRoads[i-1]<<' '<<closedRoads[i]<<endl;
+    }
+
+    return 0;
+}
